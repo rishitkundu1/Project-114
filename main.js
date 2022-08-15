@@ -1,4 +1,8 @@
-function preload(){}
+noseX = 0;
+noseY = 0;
+function preload(){
+      mustacheImage = loadImage('m.png');
+}
 function setup(){
       canvas = createCanvas(650, 450);
       canvas.center();
@@ -9,7 +13,10 @@ function setup(){
       poseNet = ml5.poseNet(video, modelLoaded);
       poseNet.on('pose', gotPoses);
 }
-function draw(){}
+function draw(){
+      image(video, 0, 0, 650, 450);
+      image(mustacheImage, noseX, noseY, 100, 60);
+}
 function saveImage(){
       save('myFilterImage.png')
 }
@@ -19,7 +26,9 @@ function modelLoaded(){
 function gotPoses(results){
       if(results.length > 0){
             console.log(results);
-            console.log('nose x = ' + results[0].pose.nose.x);
-            console.log('nose y = ' + results[0].pose.nose.y);
+            noseX = results[0].pose.nose.x;
+            noseY = results[0].pose.nose.y;
+            console.log('nose x = ' + noseX);
+            console.log('nose y = ' + noseY);
       }
 }
